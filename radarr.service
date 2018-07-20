@@ -1,0 +1,15 @@
+[Unit]
+Description=Automated manager and downloader for Movies
+
+[Service]
+ExecStart=/usr/bin/mono --debug /usr/share/radarr/Radarr.exe -nobrowser -data /var/lib/radarr
+User=radarr
+Group=radarr
+Restart=on-failure
+RestartSec=5
+
+[Unit]
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
