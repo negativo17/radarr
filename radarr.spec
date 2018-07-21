@@ -15,15 +15,13 @@ Source2:        https://raw.githubusercontent.com/Radarr/Radarr/develop/README.m
 Source10:       %{name}.service
 Source11:       %{name}.xml
 
+BuildRequires:  firewalld-filesystem
 BuildRequires:  systemd
 BuildRequires:  tar
 
-# Required for the firewall rules
-# http://fedoraproject.org/wiki/PackagingDrafts/ScriptletSnippets/Firewalld
 Requires:       firewalld-filesystem
 Requires(post): firewalld-filesystem
-
-Requires:       mono
+Requires:       mono-core
 Requires:       libmediainfo
 Requires:       sqlite
 
@@ -50,7 +48,8 @@ install -m 0644 -p %{SOURCE11} %{buildroot}%{_prefix}/lib/firewalld/services/%{n
 
 find %{buildroot} -name "*.mdb" -delete
 find %{buildroot} \( -name "*.js" -o -name "*.map" -o -name "*.config" \
-    -o -name "*.css" -o -name "*.svg" \) -exec chmod 644 {} \;
+    -o -name "*.css" -o -name "*.svg" -o -name "*.txt" -o -name "*.html" \
+    -o -name "*.xml" -o -name "*.json" \) -exec chmod 644 {} \;
 
 %pre
 getent group %{group} >/dev/null || groupadd -r %{group}
