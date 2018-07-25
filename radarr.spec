@@ -24,6 +24,7 @@ Requires(post): firewalld-filesystem
 Requires:       mono-core
 Requires:       libmediainfo
 Requires:       sqlite
+Requires(pre):  shadow-utils
 
 %description
 Radarr is a PVR for Usenet and BitTorrent users. It can monitor multiple RSS
