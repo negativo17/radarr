@@ -2,14 +2,14 @@
 %global group %{name}
 
 Name:           radarr
-Version:        0.2.0.1120
+Version:        0.2.0.1217
 Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
 BuildArch:      noarch
 
-Source0:        https://github.com/Radarr/Radarr/releases/download/v%{version}/Radarr.develop.%{version}.linux.tar.gz
+Source0:        https://github.com/Radarr/Radarr/releases/download/v%{version}/Radarr.v%{version}.linux.tar.gz
 Source1:        https://raw.githubusercontent.com/Radarr/Radarr/develop/LICENSE
 Source2:        https://raw.githubusercontent.com/Radarr/Radarr/develop/README.md
 Source10:       %{name}.service
@@ -78,5 +78,8 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Sun Nov 25 2018 Simone Caronni <negativo17@gmail.com> - 0.2.0.1217-1
+- Update to 0.2.0.1217.
+
 * Fri Jul 20 2018 Simone Caronni <negativo17@gmail.com> - 0.2.0.1120-1
 - First build.
