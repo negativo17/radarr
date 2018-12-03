@@ -3,7 +3,7 @@
 
 Name:           radarr
 Version:        0.2.0.1217
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -21,8 +21,9 @@ BuildRequires:  tar
 
 Requires:       firewalld-filesystem
 Requires(post): firewalld-filesystem
-Requires:       mono-core
 Requires:       libmediainfo
+Requires:       mono-core
+Requires:       mono-locale-extras
 Requires:       sqlite
 Requires(pre):  shadow-utils
 
@@ -78,6 +79,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Mon Dec 03 2018 Simone Caronni <negativo17@gmail.com> - 0.2.0.1217-2
+- Add missing mono-locale-extras dependency.
+
 * Sun Nov 25 2018 Simone Caronni <negativo17@gmail.com> - 0.2.0.1217-1
 - Update to 0.2.0.1217.
 
