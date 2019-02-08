@@ -2,8 +2,8 @@
 %global group %{name}
 
 Name:           radarr
-Version:        0.2.0.1217
-Release:        2%{?dist}
+Version:        0.2.0.1293
+Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -79,6 +79,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Fri Feb 08 2019 Simone Caronni <negativo17@gmail.com> - 0.2.0.1293-1
+- Update to v0.2.0.1293.
+
 * Mon Dec 03 2018 Simone Caronni <negativo17@gmail.com> - 0.2.0.1217-2
 - Add missing mono-locale-extras dependency.
 
