@@ -9,7 +9,7 @@ License:        GPLv3
 URL:            https://radarr.video/
 BuildArch:      noarch
 
-Source0:        https://github.com/Radarr/Radarr/releases/download/v%{version}/Radarr.v%{version}.linux.tar.gz
+Source0:        https://github.com/Radarr/Radarr/releases/download/v%{version}/Radarr.develop.%{version}.linux.tar.gz
 Source1:        https://raw.githubusercontent.com/Radarr/Radarr/develop/LICENSE
 Source2:        https://raw.githubusercontent.com/Radarr/Radarr/develop/README.md
 Source10:       %{name}.service
