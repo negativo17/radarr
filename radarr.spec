@@ -2,7 +2,7 @@
 %global group %{name}
 
 Name:           radarr
-Version:        0.2.0.1344
+Version:        0.2.0.1358
 Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
@@ -79,6 +79,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Tue Jul 09 2019 Simone Caronni <negativo17@gmail.com> - 0.2.0.1358-1
+- Update to 0.2.0.1358.
+
 * Mon May 06 2019 Simone Caronni <negativo17@gmail.com> - 0.2.0.1344-1
 - Update to 0.2.0.1344.
 
