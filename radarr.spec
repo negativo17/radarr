@@ -2,16 +2,16 @@
 %global group %{name}
 
 Name:           radarr
-Version:        0.2.0.1504
+Version:        3.0.0.3943
 Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
-BuildArch:      noarch
 
-Source0:        https://github.com/Radarr/Radarr/releases/download/v%{version}/Radarr.develop.%{version}.linux.tar.gz
-Source1:        https://raw.githubusercontent.com/Radarr/Radarr/develop/LICENSE
-Source2:        https://raw.githubusercontent.com/Radarr/Radarr/develop/README.md
+Source0:        https://radarr.servarr.com/v1/update/nightly/updatefile?version=%{version}&os=linux&runtime=netcore&arch=x64#/Radarr.nightly.%{version}.linux-core-x64.tar.gz
+Source1:        https://radarr.servarr.com/v1/update/nightly/updatefile?version=%{version}&os=linux&runtime=netcore&arch=arm64#/Radarr.nightly.%{version}.linux-core-arm64.tar.gz
+Source5:        https://raw.githubusercontent.com/Radarr/Radarr/develop/LICENSE
+Source6:        https://raw.githubusercontent.com/Radarr/Radarr/develop/README.md
 Source10:       %{name}.service
 Source11:       %{name}.xml
 
@@ -34,8 +34,15 @@ configured to automatically upgrade the quality of files already downloaded when
 a better quality format becomes available.
 
 %prep
-%autosetup -n Radarr
-cp %{SOURCE1} %{SOURCE2} .
+%ifarch x86_64
+%setup -q -n Radarr
+%endif
+
+%ifarch aarch64
+%setup -q -T -b 1 -n Radarr
+%endif
+
+cp %{SOURCE5} %{SOURCE6} .
 
 %install
 mkdir -p %{buildroot}%{_datadir}/%{name}
@@ -47,11 +54,6 @@ cp -fr * %{buildroot}%{_datadir}/%{name}
 
 install -m 0644 -p %{SOURCE10} %{buildroot}%{_unitdir}/%{name}.service
 install -m 0644 -p %{SOURCE11} %{buildroot}%{_prefix}/lib/firewalld/services/%{name}.xml
-
-find %{buildroot} -name "*.mdb" -delete
-find %{buildroot} \( -name "*.js" -o -name "*.map" -o -name "*.config" \
-    -o -name "*.css" -o -name "*.svg" -o -name "*.txt" -o -name "*.html" \
-    -o -name "*.xml" -o -name "*.json" \) -exec chmod 644 {} \;
 
 %pre
 getent group %{group} >/dev/null || groupadd -r %{group}
@@ -79,6 +81,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Fri Oct 16 2020 Simone Caronni <negativo17@gmail.com> - 3.0.0.3943-1
+- Update to 3.0.0.3943.
+
 * Thu Jul 09 2020 Simone Caronni <negativo17@gmail.com> - 0.2.0.1504-1
 - Update to version 0.2.0.1504.
 
