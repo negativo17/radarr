@@ -7,6 +7,7 @@ Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
+ExclusiveArch:  x86_64 aarch64
 
 Source0:        https://radarr.servarr.com/v1/update/nightly/updatefile?version=%{version}&os=linux&runtime=netcore&arch=x64#/Radarr.nightly.%{version}.linux-core-x64.tar.gz
 Source1:        https://radarr.servarr.com/v1/update/nightly/updatefile?version=%{version}&os=linux&runtime=netcore&arch=arm64#/Radarr.nightly.%{version}.linux-core-arm64.tar.gz
