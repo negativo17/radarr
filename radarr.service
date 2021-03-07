@@ -2,7 +2,7 @@
 Description=Automated manager and downloader for Movies
 
 [Service]
-ExecStart=/usr/share/radarr/Radarr -nobrowser -data /var/lib/radarr
+ExecStart=/usr/lib64/radarr/Radarr -nobrowser -data /var/lib/radarr
 User=radarr
 Group=radarr
 Restart=on-failure

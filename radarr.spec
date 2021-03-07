@@ -45,12 +45,12 @@ a better quality format becomes available.
 cp %{SOURCE5} %{SOURCE6} .
 
 %install
-mkdir -p %{buildroot}%{_datadir}/%{name}
+mkdir -p %{buildroot}%{_libdir}/%{name}
 mkdir -p %{buildroot}%{_prefix}/lib/firewalld/services/
 mkdir -p %{buildroot}%{_unitdir}
 mkdir -p %{buildroot}%{_sharedstatedir}/%{name}
 
-cp -fr * %{buildroot}%{_datadir}/%{name}
+cp -fr * %{buildroot}%{_libdir}/%{name}
 
 install -m 0644 -p %{SOURCE10} %{buildroot}%{_unitdir}/%{name}.service
 install -m 0644 -p %{SOURCE11} %{buildroot}%{_prefix}/lib/firewalld/services/%{name}.xml
@@ -76,13 +76,14 @@ exit 0
 %license LICENSE
 %doc README.md
 %attr(750,%{user},%{group}) %{_sharedstatedir}/%{name}
-%{_datadir}/%{name}
+%{_libdir}/%{name}
 %{_prefix}/lib/firewalld/services/%{name}.xml
 %{_unitdir}/%{name}.service
 
 %changelog
 * Sun Mar 07 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4690-1
 - Update to 3.1.0.4690.
+- Move installation to libdir.
 
 * Thu Feb 11 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4624-1
 - Update to 3.1.0.4624.
