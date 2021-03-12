@@ -2,7 +2,7 @@
 %global group %{name}
 
 Name:           radarr
-Version:        3.1.0.4690
+Version:        3.1.0.4735
 Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
@@ -27,6 +27,10 @@ Requires:       mono-core
 Requires:       mono-locale-extras
 Requires:       sqlite
 Requires(pre):  shadow-utils
+
+%if 0%{?rhel} >= 8 || 0%{?fedora}
+Requires:       (%{name}-selinux if selinux-policy)
+%endif
 
 %description
 Radarr is a PVR for Usenet and BitTorrent users. It can monitor multiple RSS
@@ -82,6 +86,10 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Fri Mar 12 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4735-1
+- Update to 3.1.0.4735.
+- Add SELinux requirements.
+
 * Sun Mar 07 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4690-1
 - Update to 3.1.0.4690.
 - Move installation to libdir.
