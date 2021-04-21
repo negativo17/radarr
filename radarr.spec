@@ -1,30 +1,46 @@
+%global debug_package %{nil}
+
 %global user %{name}
 %global group %{name}
 
+%global dotnet 5.0
+
+%ifarch x86_64
+%global rid x64
+%endif
+
+%ifarch aarch64
+%global rid arm64
+%endif
+
+%ifarch armv7hl
+%global rid arm
+%endif
+
 Name:           radarr
-Version:        3.1.0.4887
+Version:        3.1.0.4893
 Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
-ExclusiveArch:  x86_64 aarch64
 
-Source0:        https://radarr.servarr.com/v1/update/nightly/updatefile?version=%{version}&os=linux&runtime=netcore&arch=x64#/Radarr.nightly.%{version}.linux-core-x64.tar.gz
-Source1:        https://radarr.servarr.com/v1/update/nightly/updatefile?version=%{version}&os=linux&runtime=netcore&arch=arm64#/Radarr.nightly.%{version}.linux-core-arm64.tar.gz
-Source5:        https://raw.githubusercontent.com/Radarr/Radarr/develop/LICENSE
-Source6:        https://raw.githubusercontent.com/Radarr/Radarr/develop/README.md
+BuildArch:      x86_64 aarch64 armv7hl
+
+Source0:        https://github.com/%{name}/Radarr/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 Source10:       %{name}.service
 Source11:       %{name}.xml
 
+BuildRequires:  dotnet-sdk-%{dotnet}
 BuildRequires:  firewalld-filesystem
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires:  systemd
 BuildRequires:  tar
+BuildRequires:  yarn
 
 Requires:       firewalld-filesystem
 Requires(post): firewalld-filesystem
 Requires:       libmediainfo
-Requires:       mono-core
-Requires:       mono-locale-extras
 Requires:       sqlite
 Requires(pre):  shadow-utils
 
@@ -39,26 +55,42 @@ configured to automatically upgrade the quality of files already downloaded when
 a better quality format becomes available.
 
 %prep
-%ifarch x86_64
-%setup -q -n Radarr
-%endif
+%autosetup -n Radarr-%{version}
 
-%ifarch aarch64
-%setup -q -T -b 1 -n Radarr
-%endif
+sed -i \
+    -e 's/<AssemblyVersion>.*<\/AssemblyVersion>/<AssemblyVersion>%{version}<\/AssemblyVersion>/g' \
+    -e 's/<AssemblyConfiguration>.*<\/AssemblyConfiguration>/<AssemblyConfiguration>master<\/AssemblyConfiguration>/g' \
+    src/Directory.Build.props
 
-cp %{SOURCE5} %{SOURCE6} .
+%build
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+dotnet publish \
+    --configuration Release \
+    --framework net%{dotnet} \
+    --runtime linux-%{rid} \
+    src/Radarr.sln
+
+yarn install --frozen-lockfile
+yarn run build --production
 
 %install
-mkdir -p %{buildroot}%{_libdir}/%{name}
-mkdir -p %{buildroot}%{_prefix}/lib/firewalld/services/
+mkdir -p %{buildroot}%{_libdir}
+mkdir -p %{buildroot}%{_prefix}/lib/firewalld/services
 mkdir -p %{buildroot}%{_unitdir}
 mkdir -p %{buildroot}%{_sharedstatedir}/%{name}
 
-cp -fr * %{buildroot}%{_libdir}/%{name}
+cp -a _output/net%{dotnet}/linux-%{rid}/publish %{buildroot}%{_libdir}/%{name}
+cp -a _output/Radarr.Update/net%{dotnet}/linux-%{rid}/publish %{buildroot}%{_libdir}/%{name}/Radarr.Update
+cp -a _output/UI %{buildroot}%{_libdir}/%{name}/UI
 
 install -m 0644 -p %{SOURCE10} %{buildroot}%{_unitdir}/%{name}.service
 install -m 0644 -p %{SOURCE11} %{buildroot}%{_prefix}/lib/firewalld/services/%{name}.xml
+
+find %{buildroot} -name "*.pdb" -delete
+find %{buildroot} -name "ServiceUninstall*" -delete
+find %{buildroot} -name "ServiceInstall*" -delete
+find %{buildroot} -name "Radarr.Windows*" -delete
 
 %pre
 getent group %{group} >/dev/null || groupadd -r %{group}
@@ -86,6 +118,10 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Wed Apr 21 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4893-1
+- Update to 3.1.0.4893.
+- Build binaries from source.
+
 * Mon Apr 19 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4887-1
 - Update to 3.1.0.4887.
 
