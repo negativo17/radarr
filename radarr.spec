@@ -1,4 +1,5 @@
 %global debug_package %{nil}
+%define _build_id_links none
 
 %global user %{name}
 %global group %{name}
@@ -19,7 +20,7 @@
 
 Name:           radarr
 Version:        3.1.0.4893
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -118,6 +119,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Fri Apr 23 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4893-2
+- Do not create build-id links if no debug package is generated.
+
 * Wed Apr 21 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4893-1
 - Update to 3.1.0.4893.
 - Build binaries from source.
