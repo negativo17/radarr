@@ -19,8 +19,8 @@
 %endif
 
 Name:           radarr
-Version:        3.1.0.4893
-Release:        2%{?dist}
+Version:        3.1.1.4954
+Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -119,6 +119,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Wed May 05 2021 Simone Caronni <negativo17@gmail.com> - 3.1.1.4954-1
+- Update to 3.1.1.4954.
+
 * Fri Apr 23 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4893-2
 - Do not create build-id links if no debug package is generated.
 
