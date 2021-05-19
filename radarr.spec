@@ -19,7 +19,7 @@
 %endif
 
 Name:           radarr
-Version:        3.1.1.4954
+Version:        3.2.0.5048
 Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
@@ -35,9 +35,10 @@ BuildRequires:  dotnet-sdk-%{dotnet}
 BuildRequires:  firewalld-filesystem
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
+BuildRequires:  nodejs
 BuildRequires:  systemd
 BuildRequires:  tar
-BuildRequires:  yarn
+BuildRequires:  yarnpkg
 
 Requires:       firewalld-filesystem
 Requires(post): firewalld-filesystem
@@ -73,7 +74,7 @@ dotnet publish \
     src/Radarr.sln
 
 yarn install --frozen-lockfile
-yarn run build --production
+yarn run build --mode production
 
 %install
 mkdir -p %{buildroot}%{_libdir}
@@ -119,6 +120,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Sun May 23 2021 Simone Caronni <negativo17@gmail.com> - 3.2.0.5048-1
+- Update to 3.2.0.5048.
+
 * Wed May 05 2021 Simone Caronni <negativo17@gmail.com> - 3.1.1.4954-1
 - Update to 3.1.1.4954.
 
