@@ -71,6 +71,7 @@ dotnet publish \
     --configuration Release \
     --framework net%{dotnet} \
     --runtime linux-%{rid} \
+    --verbosity normal \
     src/Radarr.sln
 
 yarn install --frozen-lockfile
