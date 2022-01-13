@@ -4,7 +4,7 @@
 %global user %{name}
 %global group %{name}
 
-%global dotnet 5.0
+%global dotnet 6.0
 
 %ifarch x86_64
 %global rid x64
@@ -19,7 +19,7 @@
 %endif
 
 Name:           radarr
-Version:        3.2.2.5080
+Version:        4.0.0.5745
 Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
@@ -65,6 +65,11 @@ sed -i \
     src/Directory.Build.props
 
 %build
+%if 0%{?rhel} == 7
+# Official Microsoft .NET packages
+export PATH=$PATH:/usr/share/dotnet
+%endif
+
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 dotnet publish \
@@ -121,6 +126,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Tue Jan 04 2022 Simone Caronni <negativo17@gmail.com> - 4.0.0.5745-1
+- Update to 4.0.0.5745.
+
 * Thu Jun 03 2021 Simone Caronni <negativo17@gmail.com> - 3.2.2.5080-1
 - Update to 3.2.2.5080.
 
