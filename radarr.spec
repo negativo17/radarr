@@ -20,14 +20,14 @@
 
 Name:           radarr
 Version:        4.0.4.5922
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
 
 BuildArch:      x86_64 aarch64 armv7hl
 
-Source0:        https://github.com/%{name}/Radarr/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        https://github.com/Radarr/Radarr/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 Source10:       %{name}.service
 Source11:       %{name}.xml
 
@@ -59,41 +59,31 @@ a better quality format becomes available.
 %prep
 %autosetup -n Radarr-%{version}
 
-sed -i \
-    -e 's/<AssemblyVersion>.*<\/AssemblyVersion>/<AssemblyVersion>%{version}<\/AssemblyVersion>/g' \
-    -e 's/<AssemblyConfiguration>.*<\/AssemblyConfiguration>/<AssemblyConfiguration>master<\/AssemblyConfiguration>/g' \
-    src/Directory.Build.props
-
 %build
-%if 0%{?rhel} == 7
-# Official Microsoft .NET packages
-export PATH=$PATH:/usr/share/dotnet
-%endif
-
+pushd src
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 dotnet publish \
     --configuration Release \
     --framework net%{dotnet} \
+    --output _output \
     --runtime linux-%{rid} \
+    --self-contained \
     --verbosity normal \
-    src/Radarr.sln
+    Radarr.sln
+popd
 
-yarn install --frozen-lockfile
+yarn install --frozen-lockfile --network-timeout 36000
 yarn run build --mode production
 
 %install
 mkdir -p %{buildroot}%{_libdir}
-mkdir -p %{buildroot}%{_prefix}/lib/firewalld/services
-mkdir -p %{buildroot}%{_unitdir}
 mkdir -p %{buildroot}%{_sharedstatedir}/%{name}
 
-cp -a _output/net%{dotnet}/linux-%{rid}/publish %{buildroot}%{_libdir}/%{name}
-cp -a _output/Radarr.Update/net%{dotnet}/linux-%{rid}/publish %{buildroot}%{_libdir}/%{name}/Radarr.Update
-cp -a _output/UI %{buildroot}%{_libdir}/%{name}/UI
+cp -a src/_output %{buildroot}%{_libdir}/%{name}
 
-install -m 0644 -p %{SOURCE10} %{buildroot}%{_unitdir}/%{name}.service
-install -m 0644 -p %{SOURCE11} %{buildroot}%{_prefix}/lib/firewalld/services/%{name}.xml
+install -D -m 0644 -p %{SOURCE10} %{buildroot}%{_unitdir}/%{name}.service
+install -D -m 0644 -p %{SOURCE11} %{buildroot}%{_prefix}/lib/firewalld/services/%{name}.xml
 
 find %{buildroot} -name "*.pdb" -delete
 find %{buildroot} -name "ServiceUninstall*" -delete
@@ -126,6 +116,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Sat Feb 12 2022 Simone Caronni <negativo17@gmail.com> - 4.0.4.5922-2
+- Clean up SPEC file and fix build on aarch64.
+
 * Fri Feb 04 2022 Simone Caronni <negativo17@gmail.com> - 4.0.4.5922-1
 - Update to 4.0.4.5922.
 
