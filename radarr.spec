@@ -20,7 +20,7 @@
 
 Name:           radarr
 Version:        4.0.4.5922
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -59,6 +59,26 @@ a better quality format becomes available.
 %prep
 %autosetup -n Radarr-%{version}
 
+# Remove test coverage and Windows specific stuff from project file
+pushd src
+dotnet sln Radarr.sln remove \
+  NzbDrone.Api.Test \
+  NzbDrone.Automation.Test \
+  NzbDrone.Common.Test \
+  NzbDrone.Core.Test \
+  NzbDrone.Host.Test \
+  NzbDrone.Integration.Test \
+  NzbDrone.Libraries.Test \
+  NzbDrone.Mono.Test \
+  NzbDrone.Test.Common \
+  NzbDrone.Test.Dummy \
+  NzbDrone.Update.Test \
+  NzbDrone.Windows.Test \
+  NzbDrone.Windows \
+  ServiceHelpers\ServiceInstall \
+  ServiceHelpers\ServiceUninstall
+popd
+
 %build
 pushd src
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
@@ -73,22 +93,20 @@ dotnet publish \
     Radarr.sln
 popd
 
-yarn install --frozen-lockfile --network-timeout 36000
+# Use a huge timeout for aarch64 builds
+yarn install --frozen-lockfile --network-timeout 1000000
 yarn run build --mode production
 
 %install
-mkdir -p %{buildroot}%{_libdir}
+mkdir -p %{buildroot}%{_libdir}/%{name}
 mkdir -p %{buildroot}%{_sharedstatedir}/%{name}
 
-cp -a src/_output %{buildroot}%{_libdir}/%{name}
+cp -a src/_output/* _output/UI %{buildroot}%{_libdir}/%{name}/
 
 install -D -m 0644 -p %{SOURCE10} %{buildroot}%{_unitdir}/%{name}.service
 install -D -m 0644 -p %{SOURCE11} %{buildroot}%{_prefix}/lib/firewalld/services/%{name}.xml
 
 find %{buildroot} -name "*.pdb" -delete
-find %{buildroot} -name "ServiceUninstall*" -delete
-find %{buildroot} -name "ServiceInstall*" -delete
-find %{buildroot} -name "Radarr.Windows*" -delete
 
 %pre
 getent group %{group} >/dev/null || groupadd -r %{group}
@@ -116,6 +134,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Fri Feb 25 2022 Simone Caronni <negativo17@gmail.com> - 4.0.4.5922-3
+- Remove test coverage stuff.
+
 * Sat Feb 12 2022 Simone Caronni <negativo17@gmail.com> - 4.0.4.5922-2
 - Clean up SPEC file and fix build on aarch64.
 
