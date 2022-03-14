@@ -20,7 +20,7 @@
 
 Name:           radarr
 Version:        4.0.5.5981
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -75,8 +75,8 @@ dotnet sln Radarr.sln remove \
   NzbDrone.Update.Test \
   NzbDrone.Windows.Test \
   NzbDrone.Windows \
-  ServiceHelpers\ServiceInstall \
-  ServiceHelpers\ServiceUninstall
+  ServiceHelpers/ServiceInstall \
+  ServiceHelpers/ServiceUninstall
 popd
 
 %build
@@ -134,6 +134,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Mon Mar 14 2022 Simone Caronni <negativo17@gmail.com> - 4.0.5.5981-2
+- Fix typo that actually let the Windows service executables to be built.
+
 * Sun Mar 06 2022 Simone Caronni <negativo17@gmail.com> - 4.0.5.5981-1
 - Update to 4.0.5.5981.
 
