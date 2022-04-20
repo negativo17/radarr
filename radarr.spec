@@ -19,8 +19,8 @@
 %endif
 
 Name:           radarr
-Version:        4.0.5.5981
-Release:        2%{?dist}
+Version:        4.1.0.6175
+Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -134,6 +134,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Wed Apr 20 2022 Simone Caronni <negativo17@gmail.com> - 4.1.0.6175-1
+- Update to 4.1.0.6175.
+
 * Mon Mar 14 2022 Simone Caronni <negativo17@gmail.com> - 4.0.5.5981-2
 - Fix typo that actually let the Windows service executables to be built.
 
