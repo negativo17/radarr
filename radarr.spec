@@ -20,7 +20,7 @@
 
 Name:           radarr
 Version:        4.1.0.6175
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -35,7 +35,11 @@ BuildRequires:  dotnet-sdk-%{dotnet}
 BuildRequires:  firewalld-filesystem
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
+%if 0%{?rhel} >= 8 || 0%{?fedora} >= 36
+BuildRequires:  nodejs >= 17
+%else
 BuildRequires:  nodejs
+%endif
 BuildRequires:  systemd
 BuildRequires:  tar
 BuildRequires:  yarnpkg
@@ -95,6 +99,9 @@ popd
 
 # Use a huge timeout for aarch64 builds
 yarn install --frozen-lockfile --network-timeout 1000000
+%if 0%{?rhel} >= 9 || 0%{?fedora} >= 36
+export NODE_OPTIONS=--openssl-legacy-provider
+%endif
 yarn run build --mode production
 
 %install
@@ -134,6 +141,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Sun May 15 2022 Simone Caronni <negativo17@gmail.com> - 4.1.0.6175-2
+- Adjust build for OpenSSL 3.0 based distributions.
+
 * Wed Apr 20 2022 Simone Caronni <negativo17@gmail.com> - 4.1.0.6175-1
 - Update to 4.1.0.6175.
 
