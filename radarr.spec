@@ -18,9 +18,13 @@
 %global rid arm
 %endif
 
+%if 0%{?fedora} >= 36
+%global __requires_exclude ^liblttng-ust\\.so\\.0.*$
+%endif
+
 Name:           radarr
 Version:        4.1.0.6175
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -141,6 +145,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Thu Jun 16 2022 Simone Caronni <negativo17@gmail.com> - 4.1.0.6175-3
+- Fix issues with LTTng Userspace Tracer library 2.13+.
+
 * Sun May 15 2022 Simone Caronni <negativo17@gmail.com> - 4.1.0.6175-2
 - Adjust build for OpenSSL 3.0 based distributions.
 
