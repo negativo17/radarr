@@ -23,8 +23,8 @@
 %endif
 
 Name:           radarr
-Version:        4.1.0.6175
-Release:        3%{?dist}
+Version:        4.2.1.6478
+Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -145,6 +145,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Mon Aug 15 2022 Simone Caronni <negativo17@gmail.com> - 4.2.1.6478-1
+- Update to 4.2.1.6478.
+
 * Thu Jun 16 2022 Simone Caronni <negativo17@gmail.com> - 4.1.0.6175-3
 - Fix issues with LTTng Userspace Tracer library 2.13+.
 
