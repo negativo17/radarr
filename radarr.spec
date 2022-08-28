@@ -118,6 +118,7 @@ install -D -m 0644 -p %{SOURCE10} %{buildroot}%{_unitdir}/%{name}.service
 install -D -m 0644 -p %{SOURCE11} %{buildroot}%{_prefix}/lib/firewalld/services/%{name}.xml
 
 find %{buildroot} -name "*.pdb" -delete
+find %{buildroot} -name "ffprobe" -exec chmod 0755 {} \;
 
 %pre
 getent group %{group} >/dev/null || groupadd -r %{group}
