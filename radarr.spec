@@ -24,7 +24,7 @@
 
 Name:           radarr
 Version:        4.2.2.6503
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -146,6 +146,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Sun Sep 04 2022 Simone Caronni <negativo17@gmail.com> - 4.2.2.6503-2
+- Fix ffprobe permissions (thanks GarryPlotter).
+
 * Tue Aug 23 2022 Simone Caronni <negativo17@gmail.com> - 4.2.2.6503-1
 - Update to 4.2.2.6503.
 
