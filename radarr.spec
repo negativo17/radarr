@@ -24,7 +24,7 @@
 
 Name:           radarr
 Version:        4.3.0.6671
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -103,9 +103,6 @@ popd
 
 # Use a huge timeout for aarch64 builds
 yarn install --frozen-lockfile --network-timeout 1000000
-%if 0%{?rhel} >= 9 || 0%{?fedora} >= 36
-export NODE_OPTIONS=--openssl-legacy-provider
-%endif
 yarn run build --mode production
 
 %install
@@ -146,6 +143,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Wed Oct 26 2022 Simone Caronni <negativo17@gmail.com> - 4.3.0.6671-2
+- Drop OpenSSL workaround.
+
 * Tue Oct 25 2022 Simone Caronni <negativo17@gmail.com> - 4.3.0.6671-1
 - Update to 4.3.0.6671.
 
