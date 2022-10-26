@@ -39,11 +39,7 @@ BuildRequires:  dotnet-sdk-%{dotnet}
 BuildRequires:  firewalld-filesystem
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
-%if 0%{?rhel} >= 8 || 0%{?fedora} >= 36
-BuildRequires:  nodejs >= 17
-%else
 BuildRequires:  nodejs
-%endif
 BuildRequires:  systemd
 BuildRequires:  tar
 BuildRequires:  yarnpkg
