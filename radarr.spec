@@ -1,3 +1,6 @@
+# mock configuration:
+# - Requires network for running yarn/dotnet build
+
 %global debug_package %{nil}
 %define _build_id_links none
 
@@ -24,7 +27,7 @@
 
 Name:           radarr
 Version:        4.3.0.6671
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -139,6 +142,10 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Fri Oct 28 2022 Simone Caronni <negativo17@gmail.com> - 4.3.0.6671-3
+- Add note about mock configuration.
+- Trim changelog.
+
 * Wed Oct 26 2022 Simone Caronni <negativo17@gmail.com> - 4.3.0.6671-2
 - Drop OpenSSL workaround.
 
@@ -186,102 +193,3 @@ exit 0
 
 * Fri Feb 04 2022 Simone Caronni <negativo17@gmail.com> - 4.0.4.5922-1
 - Update to 4.0.4.5922.
-
-* Sun Jan 23 2022 Simone Caronni <negativo17@gmail.com> - 4.0.3.5879-1
-- Update to 4.0.3.5879.
-
-* Thu Jan 20 2022 Simone Caronni <negativo17@gmail.com> - 4.0.2.5836-1
-- Update to 4.0.2.5836.
-
-* Thu Jan 13 2022 Simone Caronni <negativo17@gmail.com> - 4.0.1.5813-1
-- Update to 4.0.1.5813.
-
-* Tue Jan 04 2022 Simone Caronni <negativo17@gmail.com> - 4.0.0.5745-1
-- Update to 4.0.0.5745.
-
-* Thu Jun 03 2021 Simone Caronni <negativo17@gmail.com> - 3.2.2.5080-1
-- Update to 3.2.2.5080.
-
-* Fri May 28 2021 Simone Caronni <negativo17@gmail.com> - 3.2.1.5070-1
-- Update to 3.2.1.5070.
-
-* Sun May 23 2021 Simone Caronni <negativo17@gmail.com> - 3.2.0.5048-1
-- Update to 3.2.0.5048.
-
-* Wed May 05 2021 Simone Caronni <negativo17@gmail.com> - 3.1.1.4954-1
-- Update to 3.1.1.4954.
-
-* Fri Apr 23 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4893-2
-- Do not create build-id links if no debug package is generated.
-
-* Wed Apr 21 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4893-1
-- Update to 3.1.0.4893.
-- Build binaries from source.
-
-* Mon Apr 19 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4887-1
-- Update to 3.1.0.4887.
-
-* Fri Mar 12 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4735-1
-- Update to 3.1.0.4735.
-- Add SELinux requirements.
-
-* Sun Mar 07 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4690-1
-- Update to 3.1.0.4690.
-- Move installation to libdir.
-
-* Thu Feb 11 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4624-1
-- Update to 3.1.0.4624.
-
-* Tue Feb 02 2021 Simone Caronni <negativo17@gmail.com> - 3.1.0.4529-1
-- Update to 3.1.0.4529.
-
-* Thu Jan 21 2021 Simone Caronni <negativo17@gmail.com> - 3.0.2.4446-1
-- Update to 3.0.2.4446.
-
-* Thu Jan  7 2021 Simone Caronni <negativo17@gmail.com> - 3.0.1.4359-1
-- Update to 3.0.1.4359.
-
-* Sat Dec 26 2020 Simone Caronni <negativo17@gmail.com> - 3.0.1.4326-1
-- Update to 3.0.1.4326.
-
-* Tue Dec 08 2020 Simone Caronni <negativo17@gmail.com> - 3.0.0.4235-1
-- Update to 3.0.0.4235.
-
-* Sat Nov 21 2020 Simone Caronni <negativo17@gmail.com> - 3.0.0.4107-1
-- Update to 3.0.0.4107.
-
-* Tue Nov 17 2020 Simone Caronni <negativo17@gmail.com> - 3.0.0.4092-1
-- Update to 3.0.0.4092.
-
-* Thu Nov 05 2020 Simone Caronni <negativo17@gmail.com> - 3.0.0.3987-1
-- Update to 3.0.0.3987.
-
-* Fri Oct 16 2020 Simone Caronni <negativo17@gmail.com> - 3.0.0.3943-1
-- Update to 3.0.0.3943.
-
-* Thu Jul 09 2020 Simone Caronni <negativo17@gmail.com> - 0.2.0.1504-1
-- Update to version 0.2.0.1504.
-
-* Thu Feb 20 2020 Simone Caronni <negativo17@gmail.com> - 0.2.0.1480-1
-- Update to 0.2.0.1480.
-
-* Sat Dec 21 2019 Simone Caronni <negativo17@gmail.com> - 0.2.0.1450-1
-- Update to 0.2.0.1450.
-
-* Tue Jul 09 2019 Simone Caronni <negativo17@gmail.com> - 0.2.0.1358-1
-- Update to 0.2.0.1358.
-
-* Mon May 06 2019 Simone Caronni <negativo17@gmail.com> - 0.2.0.1344-1
-- Update to 0.2.0.1344.
-
-* Fri Feb 08 2019 Simone Caronni <negativo17@gmail.com> - 0.2.0.1293-1
-- Update to v0.2.0.1293.
-
-* Mon Dec 03 2018 Simone Caronni <negativo17@gmail.com> - 0.2.0.1217-2
-- Add missing mono-locale-extras dependency.
-
-* Sun Nov 25 2018 Simone Caronni <negativo17@gmail.com> - 0.2.0.1217-1
-- Update to 0.2.0.1217.
-
-* Fri Jul 20 2018 Simone Caronni <negativo17@gmail.com> - 0.2.0.1120-1
-- First build.
