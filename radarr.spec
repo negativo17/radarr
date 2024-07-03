@@ -26,7 +26,7 @@
 %endif
 
 Name:           radarr
-Version:        5.7.0.8882
+Version:        5.8.0.8897
 Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
@@ -136,6 +136,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Wed Jul 03 2024 Simone Caronni <negativo17@gmail.com> - 5.8.0.8897-1
+- Update to 5.8.0.8897.
+
 * Fri Jun 21 2024 Simone Caronni <negativo17@gmail.com> - 5.7.0.8882-1
 - Update to 5.7.0.8882.
 
