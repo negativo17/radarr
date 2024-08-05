@@ -35,6 +35,7 @@ URL:            https://radarr.video/
 BuildArch:      x86_64 aarch64 armv7hl
 
 Source0:        https://github.com/Radarr/Radarr/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Patch0:         https://github.com/Radarr/Radarr/commit/5559fa5fa5c52798e3b216ba93d18f1fcdd8419a.patch
 Source10:       %{name}.service
 Source11:       %{name}.xml
 
@@ -61,7 +62,7 @@ configured to automatically upgrade the quality of files already downloaded when
 a better quality format becomes available.
 
 %prep
-%autosetup -n Radarr-%{version}
+%autosetup -p1 -n Radarr-%{version}
 
 # Remove test coverage and Windows specific stuff from project file
 pushd src
@@ -135,6 +136,8 @@ exit 0
 %changelog
 * Sun Aug 04 2024 Simone Caronni <negativo17@gmail.com> - 5.8.3.8933-1
 - Update to 5.8.3.8933.
+- Fix for https://github.com/advisories/GHSA-63p8-c4ww-9cg7.
+- Clean up SPEC file.
 
 * Wed Jul 10 2024 Simone Caronni <negativo17@gmail.com> - 5.8.1.8906-1
 - Update to 5.8.1.8906.
