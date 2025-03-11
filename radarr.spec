@@ -27,7 +27,7 @@
 
 Name:           radarr
 Version:        5.19.3.9730
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -35,6 +35,7 @@ URL:            https://radarr.video/
 BuildArch:      x86_64 aarch64 armv7hl
 
 Source0:        https://github.com/Radarr/Radarr/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Patch0:         https://github.com/Radarr/Radarr/commit/df4dfaac0b66ea49195f1c08d04c548e5eea6ad0.patch
 Source10:       %{name}.service
 Source11:       %{name}.xml
 
@@ -134,6 +135,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Tue Mar 11 2025 Simone Caronni <negativo17@gmail.com> - 5.19.3.9730-2
+- Fix for GHSA-65x7-c272-7g7r.
+
 * Mon Mar 10 2025 Simone Caronni <negativo17@gmail.com> - 5.19.3.9730-1
 - Update to 5.19.3.9730.
 
