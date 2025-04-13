@@ -35,7 +35,6 @@ URL:            https://radarr.video/
 BuildArch:      x86_64 aarch64 armv7hl
 
 Source0:        https://github.com/Radarr/Radarr/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
-Patch0:         https://github.com/Radarr/Radarr/commit/df4dfaac0b66ea49195f1c08d04c548e5eea6ad0.patch
 Source10:       %{name}.service
 Source11:       %{name}.xml
 
