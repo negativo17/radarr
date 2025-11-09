@@ -26,8 +26,8 @@
 %endif
 
 Name:           radarr
-Version:        5.27.5.10198
-Release:        2%{?dist}
+Version:        5.28.0.10274
+Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -136,6 +136,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Sun Nov 09 2025 Simone Caronni <negativo17@gmail.com> - 5.28.0.10274-1
+- Update to 5.28.0.10274.
+
 * Sat Sep 06 2025 Simone Caronni <negativo17@gmail.com> - 5.27.5.10198-2
 - Make sure tracerpt is disabled, it requires an old liblttng-ust.
 
