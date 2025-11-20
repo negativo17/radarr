@@ -21,7 +21,7 @@
 %global rid arm
 %endif
 
-%if 0%{?fedora} >= 36
+%if 0%{?fedora}
 %global __requires_exclude ^liblttng-ust\\.so\\.0.*$
 %endif
 
@@ -37,6 +37,7 @@ BuildArch:      x86_64 aarch64 armv7hl
 Source0:        https://github.com/Radarr/Radarr/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 Source10:       %{name}.service
 Source11:       %{name}.xml
+Source12:       %{name}.sysusers.conf
 
 BuildRequires:  dotnet-sdk-%{dotnet}
 BuildRequires:  firewalld-filesystem
@@ -51,7 +52,6 @@ Requires:       firewalld-filesystem
 Requires(post): firewalld-filesystem
 Requires:       libmediainfo
 Requires:       sqlite
-Requires(pre):  shadow-utils
 Requires:       %{name}-selinux
 
 %description
@@ -106,16 +106,10 @@ cp -a _output/net*/* _output/UI %{buildroot}%{_libdir}/%{name}/
 
 install -D -m 0644 -p %{SOURCE10} %{buildroot}%{_unitdir}/%{name}.service
 install -D -m 0644 -p %{SOURCE11} %{buildroot}%{_prefix}/lib/firewalld/services/%{name}.xml
+install -D -m 0644 -p %{SOURCE12} %{buildroot}%{_sysusersdir}/%{name}.conf
 
 find %{buildroot} -name "*.pdb" -delete
 find %{buildroot} -name "ffprobe" -exec chmod 0755 {} \;
-
-%pre
-getent group %{group} >/dev/null || groupadd -r %{group}
-getent passwd %{user} >/dev/null || \
-    useradd -r -g %{group} -d %{_sharedstatedir}/%{name} -s /sbin/nologin \
-    -c "%{name}" %{user}
-exit 0
 
 %post
 %systemd_post %{name}.service
@@ -133,6 +127,7 @@ exit 0
 %attr(750,%{user},%{group}) %{_sharedstatedir}/%{name}
 %{_libdir}/%{name}
 %{_prefix}/lib/firewalld/services/%{name}.xml
+%{_sysusersdir}/%{name}.conf
 %{_unitdir}/%{name}.service
 
 %changelog
