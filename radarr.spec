@@ -63,6 +63,9 @@ a better quality format becomes available.
 %prep
 %autosetup -p1 -n Radarr-%{version}
 
+# Accomodate old SDK versions
+rm -f global.json
+
 # Remove test coverage and Windows specific stuff from project file
 pushd src
 dotnet sln Radarr.sln remove \
