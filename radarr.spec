@@ -35,18 +35,20 @@ URL:            https://radarr.video/
 BuildArch:      x86_64 aarch64 armv7hl
 
 Source0:        https://github.com/Radarr/Radarr/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
-Source10:       %{name}.service
-Source11:       %{name}.xml
-Source12:       %{name}.sysusers.conf
+Source1:        %{name}.sysusers.conf
+Source2:        %{name}.service
+Source3:        %{name}.xml
 
 BuildRequires:  dotnet-sdk-%{dotnet}
 BuildRequires:  firewalld-filesystem
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  nodejs
-BuildRequires:  systemd
+BuildRequires:  systemd-rpm-macros
 BuildRequires:  tar
 BuildRequires:  yarnpkg
+
+%{?sysusers_requires_compat}
 
 Requires:       firewalld-filesystem
 Requires(post): firewalld-filesystem
@@ -107,12 +109,15 @@ mkdir -p %{buildroot}%{_sharedstatedir}/%{name}
 
 cp -a _output/net*/* _output/UI %{buildroot}%{_libdir}/%{name}/
 
-install -D -m 0644 -p %{SOURCE10} %{buildroot}%{_unitdir}/%{name}.service
-install -D -m 0644 -p %{SOURCE11} %{buildroot}%{_prefix}/lib/firewalld/services/%{name}.xml
-install -D -m 0644 -p %{SOURCE12} %{buildroot}%{_sysusersdir}/%{name}.conf
+install -D -m 0644 -p %{SOURCE1} %{buildroot}%{_sysusersdir}/%{name}.conf
+install -D -m 0644 -p %{SOURCE2} %{buildroot}%{_unitdir}/%{name}.service
+install -D -m 0644 -p %{SOURCE3} %{buildroot}%{_prefix}/lib/firewalld/services/%{name}.xml
 
 find %{buildroot} -name "*.pdb" -delete
 find %{buildroot} -name "ffprobe" -exec chmod 0755 {} \;
+
+%pre
+%sysusers_create_compat %{SOURCE1}
 
 %post
 %systemd_post %{name}.service
@@ -134,6 +139,9 @@ find %{buildroot} -name "ffprobe" -exec chmod 0755 {} \;
 %{_unitdir}/%{name}.service
 
 %changelog
+* Wed Nov 26 2025 Simone Caronni <negativo17@gmail.com> - 6.0.4.10291-2
+- SPEC file cleanup.
+
 * Thu Nov 20 2025 Simone Caronni <negativo17@gmail.com> - 6.0.4.10291-1
 - Update to 6.0.4.10291.
 
