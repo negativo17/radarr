@@ -26,7 +26,7 @@
 %endif
 
 Name:           radarr
-Version:        6.1.1.10360
+Version:        6.2.1.10461
 Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
@@ -139,6 +139,9 @@ find %{buildroot} -name "ffprobe" -exec chmod 0755 {} \;
 %{_unitdir}/%{name}.service
 
 %changelog
+* Wed Jun 10 2026 Simone Caronni <negativo17@gmail.com> - 6.2.1.10461-1
+- Update to 6.2.1.10461.
+
 * Mon Apr 13 2026 Simone Caronni <negativo17@gmail.com> - 6.1.1.10360-1
 - Update to 6.1.1.10360.
 
