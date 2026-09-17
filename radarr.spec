@@ -7,7 +7,7 @@
 %global user %{name}
 %global group %{name}
 
-%global dotnet 8.0
+%global dotnet 10.0
 
 %ifarch x86_64
 %global rid x64
@@ -27,7 +27,7 @@
 
 Name:           radarr
 Version:        6.4.4.10685
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -134,6 +134,9 @@ find %{buildroot} -name "ffprobe" -exec chmod 0755 {} \;
 %{_unitdir}/%{name}.service
 
 %changelog
+* Thu Sep 17 2026 Simone Caronni <negativo17@gmail.com> - 6.4.4.10685-2
+- Build with .NET SDK 10.
+
 * Thu Sep 17 2026 Simone Caronni <negativo17@gmail.com> - 6.4.4.10685-1
 - Update to 6.4.4.10685.
 
