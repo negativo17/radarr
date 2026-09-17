@@ -27,7 +27,7 @@
 
 Name:           radarr
 Version:        6.4.4.10685
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -134,6 +134,9 @@ find %{buildroot} -name "ffprobe" -exec chmod 0755 {} \;
 %{_unitdir}/%{name}.service
 
 %changelog
+* Thu Sep 17 2026 Simone Caronni <negativo17@gmail.com> - 6.4.4.10685-3
+- Add missing requirement.
+
 * Thu Sep 17 2026 Simone Caronni <negativo17@gmail.com> - 6.4.4.10685-2
 - Build with .NET SDK 10.
 
