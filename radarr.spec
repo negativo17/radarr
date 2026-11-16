@@ -26,8 +26,8 @@
 %endif
 
 Name:           radarr
-Version:        6.4.4.10685
-Release:        3%{?dist}
+Version:        7.0.3.10918
+Release:        1%{?dist}
 Summary:        Automated manager and downloader for Movies
 License:        GPLv3
 URL:            https://radarr.video/
@@ -139,6 +139,9 @@ exit 0
 %{_unitdir}/%{name}.service
 
 %changelog
+* Mon Nov 16 2026 Simone Caronni <negativo17@gmail.com> - 7.0.3.10918-1
+- Update to 7.0.3.10918.
+
 * Thu Sep 17 2026 Simone Caronni <negativo17@gmail.com> - 6.4.4.10685-3
 - Add missing requirement.
 
